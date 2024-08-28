@@ -108,7 +108,16 @@ def extract_query_info(llm, query):
 
     Query: {query}
 
-    Please provide your response in JSON format.
+    Please provide your response in JSON format with the following structure:
+    {{
+        "state": "name of state or 'Unknown' if not clear",
+        "keywords": ["list", "of", "keywords"],
+        "acts": ["list", "of", "act", "names"]
+    }}
+
+    If you cant deduce the state from the given query, set the default state to 'India'
+
+    Your response should contain only the json and no other information before or after the json.
     """
     response = llm.invoke(prompt)
     return json.loads(response.content)
