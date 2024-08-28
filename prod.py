@@ -26,6 +26,8 @@ load_dotenv()
 os.environ['GROQ_API_KEY'] = st.secrets["GROQ_API_KEY"]
 os.environ["PINECONE_API_KEY"] = st.secrets["PINECONE_API_KEY"]
 os.environ["TOKENIZERS_PARALLELISM"] = st.secrets["TOKENIZERS_PARALLELISM"]
+os.environ["GOOGLE_CSE_ID"] = st.secrets["GOOGLE_CSE_ID"]
+os.environ["GOOGLE_API_KEY"] =  st.secrets["GOOGLE_API_KEY"]
 vectorstore_index_name = st.secrets["VECTORSTORE_INDEX_NAME"]
 
 @st.cache_resource
