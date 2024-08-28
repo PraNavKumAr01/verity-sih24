@@ -6,6 +6,8 @@ langchain_core
 langchain_pinecone
 bs4
 selenium
+seleniumbase
+webdriver-manager
 python-dotenv
 pinecone
 sentence-transformers
