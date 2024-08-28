@@ -23,10 +23,10 @@ import re
 warnings.filterwarnings("ignore")
 load_dotenv()
 
-os.environ['GROQ_API_KEY'] = os.getenv("GROQ_API_KEY")
-os.environ["PINECONE_API_KEY"] = os.getenv("PINECONE_API_KEY")
-os.environ["TOKENIZERS_PARALLELISM"] = os.getenv("TOKENIZERS_PARALLELISM")
-vectorstore_index_name = os.getenv("VECTORSTORE_INDEX_NAME")
+os.environ['GROQ_API_KEY'] = st.secrets["GROQ_API_KEY"]
+os.environ["PINECONE_API_KEY"] = st.secrets["PINECONE_API_KEY"]
+os.environ["TOKENIZERS_PARALLELISM"] = st.secrets["TOKENIZERS_PARALLELISM"]
+vectorstore_index_name = st.secrets["VECTORSTORE_INDEX_NAME"]
 
 @st.cache_resource
 def initialize_qa_chain():
@@ -34,7 +34,7 @@ def initialize_qa_chain():
 
     embeddings = HuggingFaceEmbeddings(model_name='sentence-transformers/all-mpnet-base-v2')
     
-    pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))  
+    pc = Pinecone(api_key= st.secrets["PINECONE_API_KEY"])  
     spec = ServerlessSpec(cloud='aws', region='us-east-1')  
     if vectorstore_index_name in pc.list_indexes().names():  
         pc.delete_index(vectorstore_index_name)  
@@ -48,7 +48,7 @@ def initialize_qa_chain():
     vectorstore = PineconeVectorStore(
             index_name = vectorstore_index_name,
             embedding = embeddings,
-            pinecone_api_key = os.getenv("PINECONE_API_KEY")
+            pinecone_api_key = st.secrets["PINECONE_API_KEY"]
         )
 
     prompt = hub.pull("rlm/rag-prompt-llama")
